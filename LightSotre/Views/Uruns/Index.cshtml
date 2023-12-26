@@ -1,0 +1,64 @@
+﻿@model IEnumerable<LightSotre.Models.Urun>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+<p>
+    @if (User.IsInRole("a"))
+    {
+        <a href="@Url.Action("Create", "Uruns")" class="btn btn-primary py-4">Yeni Ürün Ekle</a>
+    }
+</p>
+
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="section-title text-center">
+            <h1 class="display-5 mb-5" style="color:sienna">Ürünlerimiz</h1>
+        </div>
+        <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="col-12 text-center">
+                <ul class="list-inline mb-5" id="portfolio-flters">
+                    <li class="mx-2 active" data-filter="*">All</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row g-4 portfolio-container">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 portfolio-item @item.Kategore.KategoreIsim wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="rounded overflow-hidden">
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="@item.urunImage" alt="">
+                            <div class="portfolio-overlay">
+                                <a class="btn btn-square btn-outline-light mx-1" href="@item.urunImage" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-square btn-outline-light mx-1" href=""><i class="fas fa-cart-plus"></i></a>
+                            </div>
+                        </div>
+                        <div class="border border-5 border-light border-top-0 p-4">
+                            <r>Urun ismi :</r><r class="text-primary fw-medium mb-2"> @item.UrunIsim</r>
+                            <br />
+                            <r>Urun Fiyatı :</r><r class="text-primary fw-medium mb-2"> @item.urunFiyat</r>
+                            <br />
+                            <r>Urun Özellikleri :</r><r class="text-primary fw-medium mb-2">@item.urunOzellikler</r>
+                            <br />
+                            <br />
+                            @if (User.IsInRole("a"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.UrunId }) <r>|</r>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.UrunId }) <r>|</r>
+                                @Html.ActionLink("Details", "Details", new { id = item.UrunId })
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
